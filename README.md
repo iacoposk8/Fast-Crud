@@ -92,7 +92,7 @@ See the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-examp
 | --- | --- | --- |
 | pdo | PDO | PDO object to query the MySQL database |
 | debug | False | Show MySql query and error |
-| TODO | Array("send" => "Send", "delete" => "Delete", "delete_confirm" => "Are you sure you want to delete this item?"); | Here you can translate the interface messages |
+| language | Array("send" => "Send", "delete" => "Delete", "delete_confirm" => "Are you sure you want to delete this item?"); | Here you can translate the interface messages |
 
 ## Complete Example
 TODO
