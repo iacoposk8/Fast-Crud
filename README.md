@@ -5,6 +5,7 @@ CRUD library (create, read, update, and delete) based on php, jquery and ajax to
 - [Quickstart](https://github.com/iacoposk8/Fast-Crud#quickstart)
 - [Method](https://github.com/iacoposk8/Fast-Crud#method)
 - [Property](https://github.com/iacoposk8/Fast-Crud#property)
+- [Complete Example](https://github.com/iacoposk8/Fast-Crud#complete-example)
 - [Libraries of this project](https://github.com/iacoposk8/Fast-Crud#libraries-of-this-project)
 
 ## Quickstart
@@ -61,13 +62,24 @@ And now the index.php file that will be modified with your connection data to th
 
 | Method | Params | Description |
 | --- | --- | --- |
-| `TODO` | TODO | TODO |
+| __construct | MYSQL_HOST, MYSQ_USER, MYSQL_PASSWORD, MYSQL_DATABASE_NAME | Connection to database |
+| create | json_filename, mysql_table_name, id_column_name, optional data_manipulation_function | Create the data entry and modification form. With data_manipulation_function you can modify the data obtained from the form before inserting or modifying them in the dayabase (See complete example) |
+| view | data, head, DataTable | TODO |
 	
 ## Property
 
 | Property | Default | Description |
 | --- | --- | --- |
-| `TODO` | TODO | TODO |
+| `public $pdo;
+		public $debug = False;
+		public $language = Array(
+			"send" => "Send",
+			"delete" => "Delete",
+			"delete_confirm" => "Are you sure you want to delete this item?"
+		);` | TODO | TODO |
+
+## Complete Example
+TODO
 
 ## Libraries of this project
 - [jQuery](https://jquery.com/)
