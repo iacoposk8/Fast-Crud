@@ -76,13 +76,14 @@ If you want to enter the edit screen by clicking the "Nickname" column, just add
 		$data[$i][0] = '<span class="fast-crud-edit" attr-id="'. $data[$i][0] .'">' . $data[$i][1] . '</span>';
 ```
 Just simply add ```class="fast-crud-edit"``` to the trigger element, Followed by ```attr-id``` with inside the id of the row of the table that we want to modify or delete.
+See the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example) for other details.
 
 ## Method
 
 | Method | Params | Description |
 | --- | --- | --- |
 | __construct | MYSQL_HOST, MYSQ_USER, MYSQL_PASSWORD, MYSQL_DATABASE_NAME | Connection to database |
-| create | json_filename, mysql_table_name, id_column_name, (optional) data_manipulation_function | Create the data entry and modification form. With data_manipulation_function you can modify the data obtained from the form before inserting or modifying them in the dayabase (See complete example) |
+| create | json_filename, mysql_table_name, id_column_name, (optional) data_manipulation_function | Create the data entry and modification form. With data_manipulation_function you can modify the data obtained from the form before inserting or modifying them in the dayabase (See [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example)) |
 | view | data, head, (optional) DataTable_settings | Show data in a table |
 	
 ## Property
