@@ -57,22 +57,35 @@ And now the index.php file that will be modified with your connection data to th
 ?>
 <a href="#" id="fast-crud-add">Add</a>
 ```
+In index.php to view the data, add:
+```
+<?php
+	$sth = $fc->pdo->prepare("SELECT nickname, email FROM mytable");
+	$sth->execute();
+	$res = $sth->fetchAll(PDO::FETCH_NUM);
+
+	$fc->view($res, ["Nickname", "E-Mail"]);
+?>
+```
 
 ## Method
 
 | Method | Params | Description |
 | --- | --- | --- |
 | __construct | MYSQL_HOST, MYSQ_USER, MYSQL_PASSWORD, MYSQL_DATABASE_NAME | Connection to database |
-| create | json_filename, mysql_table_name, id_column_name, optional data_manipulation_function | Create the data entry and modification form. With data_manipulation_function you can modify the data obtained from the form before inserting or modifying them in the dayabase (See complete example) |
-| view | data, head, DataTable | TODO |
+| create | json_filename, mysql_table_name, id_column_name, (optional) data_manipulation_function | Create the data entry and modification form. With data_manipulation_function you can modify the data obtained from the form before inserting or modifying them in the dayabase (See complete example) |
+| view | data, head, (optional) DataTable_settings | Show data in a table |
 	
 ## Property
 
 | Property | Default | Description |
 | --- | --- | --- |
-| `public $pdo;
-		public $debug = False;
-		public $language = Array(
+| pdo | PDO | PDO object to query the MySQL database |
+| debug | False | Show MySql query and error |
+| TODO | default language | TODO |
+
+
+`$language = Array(
 			"send" => "Send",
 			"delete" => "Delete",
 			"delete_confirm" => "Are you sure you want to delete this item?"
