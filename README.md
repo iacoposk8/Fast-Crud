@@ -62,11 +62,20 @@ In index.php to view the data, add:
 <?php
 	$sth = $fc->pdo->prepare("SELECT nickname, email FROM mytable");
 	$sth->execute();
-	$res = $sth->fetchAll(PDO::FETCH_NUM);
+	$data = $sth->fetchAll(PDO::FETCH_NUM);
 
-	$fc->view($res, ["Nickname", "E-Mail"]);
+	$fc->view($data, ["Nickname", "E-Mail"]);
 ?>
 ```
+A table can only be a simple list of items, where it is not possible to interact.
+It can be a list with one link per row or one per column which, if clicked, will take you to a detail page.  
+But in addition to this there can also be an entry that leads you to modify or delete the row.  
+If you want to enter the edit screen by clicking the "Nickname" column, just add these two lines before ```$fc->view($res, ["Nickname", "E-Mail"]);```
+```
+	for($i = 0; $i < count($data); $i++)
+		$data[$i][0] = '<span class="fast-crud-edit" attr-id="'. $data[$i][0] .'">' . $data[$i][1] . '</span>';
+```
+Just simply add ```class="fast-crud-edit"``` to the trigger element, Followed by ```attr-id``` with inside the id of the row of the table that we want to modify or delete.
 
 ## Method
 
@@ -82,14 +91,7 @@ In index.php to view the data, add:
 | --- | --- | --- |
 | pdo | PDO | PDO object to query the MySQL database |
 | debug | False | Show MySql query and error |
-| TODO | default language | TODO |
-
-
-`$language = Array(
-			"send" => "Send",
-			"delete" => "Delete",
-			"delete_confirm" => "Are you sure you want to delete this item?"
-		);` | TODO | TODO |
+| TODO | Array("send" => "Send", "delete" => "Delete", "delete_confirm" => "Are you sure you want to delete this item?"); | Here you can translate the interface messages |
 
 ## Complete Example
 TODO
