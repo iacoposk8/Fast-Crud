@@ -144,6 +144,7 @@
 				$arg = [[],[],[]];
 				$unique = [];
 				$error = [];
+				$toevalutate = [];
 				$json[] = json_decode('[{"type": "hidden", "name": "'.$id_column_name.'"}]');
 
 				foreach($json as $divs){
@@ -164,9 +165,7 @@
 								}
 							}
 
-							$arg[0][] = "`" . $name . "`";
-							$arg[2][] = $val;
-							$arg[1][] = "?";
+							$toevalutate[$name] = $val;
 						}
 					}
 				}
@@ -176,7 +175,13 @@
 				}
 
 				if(!is_null($db_function))
-					$arg = call_user_func($db_function, $arg);
+					$toevalutate = call_user_func($db_function, $toevalutate);
+
+				foreach($toevalutate as $key => $val){
+					$arg[0][] = "`" . $key . "`";
+					$arg[2][] = $val;
+					$arg[1][] = "?";
+				}
 				
 				$sql = "REPLACE INTO `" . $table . "` (".implode(",", $arg[0]).") VALUES (".implode(",", $arg[1]).")";
 
