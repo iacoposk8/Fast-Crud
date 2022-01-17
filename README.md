@@ -19,7 +19,7 @@ For example:
 ```
 CREATE TABLE `mytable` (
   `id` int(11) NOT NULL,
-  `nickname` varchar(255) NOT NULL
+  `nickname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL
 )
 ```
@@ -37,7 +37,7 @@ For example:
 			"type": "text",
 			"name": "nickname",
 			"label": "nickname",
-			"placeholder": "Write your nickname address "
+			"placeholder": "Write your nickname address"
 		}
 	],	
 	[
@@ -45,7 +45,7 @@ For example:
 			"type": "email",
 			"name": "email",
 			"label": "Email",
-			"placeholder": "Write your e-mail address ",
+			"placeholder": "Write your e-mail address"
 		}
 	]
 ]
