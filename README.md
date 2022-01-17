@@ -1,5 +1,6 @@
 
 
+
 # Fast Crud
 CRUD library (create, read, update, and delete) based on php, jquery and ajax to quickly create forms with which to create/modify records and view/delete them
 
@@ -85,6 +86,35 @@ If you want to enter the edit screen by clicking the "Nickname" column, just add
 ```
 Just simply add ```class="fast-crud-edit"``` to the trigger element, Followed by ```attr-id``` with inside the id of the row of the table that you want to modify or delete.
 See the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example) for other details.
+
+Full example
+```
+<?php
+	require_once("FastCrud.php");
+
+	function db_insert_edit($arg){
+		//Edit $arg for process the data before inserting it into the database
+		return $arg;
+	}
+
+	$fc = new FastCrud(MYSQL_HOST, MYSQ_USER, MYSQL_PASSWORD, MYSQL_DATABASE_NAME);
+	//db_insert_edit is optional, if we want to modify the data before inserting it into the database
+	$fc->create("myjson.json", "mytable", "id", "db_insert_edit");
+?>
+<a href="#" id="fast-crud-add">Add</a>
+
+<?php
+	$sth = $fc->pdo->prepare("SELECT nickname, email FROM mytable");
+	$sth->execute();
+	$data = $sth->fetchAll(PDO::FETCH_NUM);
+
+	for($i = 0; $i < count($data); $i++)
+		$data[$i][0] = '<span class="fast-crud-edit" attr-id="'. $data[$i][0] .'">' . $data[$i][1] . '</span>';
+
+	$fc->view($data, ["Nickname", "E-Mail"]);
+?>
+
+```
 
 ## Method
 
@@ -201,8 +231,6 @@ Json file
     	]
     ]
 
-Php file
-TODO
 
 ## Libraries of this project
 - [jQuery](https://jquery.com/)
