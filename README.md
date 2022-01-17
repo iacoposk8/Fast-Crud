@@ -123,6 +123,8 @@ Full example:
 
 ```
 
+To find css styles visit: [https://freefrontend.com/css-forms](https://freefrontend.com/css-forms)
+
 ## Method
 
 | Method | Params | Description |
@@ -241,4 +243,5 @@ Json file
 
 ## Libraries of this project
 - [jQuery](https://jquery.com/)
+- [jQueryUI](https://jqueryui.com/)
 - [DataTables](https://datatables.net/)
