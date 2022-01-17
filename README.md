@@ -107,7 +107,7 @@ See the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-examp
 | --- | --- | 
 | label | Each input field will have its own `<label>` element|
 | option | Only required for if you specified `"type": "select"` to add <option> entries into <select>. Inside it you can insert an array with the list of items to show. If you need to show a value other than the content of option you can use a two-dimensional array like this `[["item to show", "content of value"]]`. For more details see the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example)|
-| validation | TODO |
+| validation | Here you can force the user to enter a particular field. For now there is only `email` and `mandatory`. Here is a two-dimensional array where there is [["control", "error message"]]. In control, you can also enter some php code. For more details see the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example)|
 
 ## Complete Example
 TODO
