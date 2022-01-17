@@ -6,7 +6,7 @@ CRUD library (create, read, update, and delete) based on php, jquery and ajax to
 - [Quickstart](https://github.com/iacoposk8/Fast-Crud#quickstart)
 - [Method](https://github.com/iacoposk8/Fast-Crud#method)
 - [Property](https://github.com/iacoposk8/Fast-Crud#property)
-- - [Json](https://github.com/iacoposk8/Fast-Crud#json)
+- [Json](https://github.com/iacoposk8/Fast-Crud#json)
 - [Complete Example](https://github.com/iacoposk8/Fast-Crud#complete-example)
 - [Libraries of this project](https://github.com/iacoposk8/Fast-Crud#libraries-of-this-project)
 
