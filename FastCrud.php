@@ -203,9 +203,9 @@
 				<div id="fast_crud_error_container"></div>
 				<form>';
 
-				foreach($json as $divs){
+				foreach($json as $divs){ 
 					echo '<div class="form_separator">';
-					foreach($divs as $field){
+					foreach($divs as $field){ 
 						if(isset($field->{"label"}))
 							echo "<label>" . $field->{"label"} . "</label>";
 						if( $field->{"type"} == "textarea" ){
@@ -342,11 +342,20 @@
 								data: $(this).serialize() + "&fast-crud-send=1",
 								success: function(e){
 									if(typeof e["error"] !== "undefined"){
+										var show_error = false;
 										for(var i in e["error"]){
-											console.log(dialog + ' *[name="'+e["error"][i][0]+'"]');
-											$(dialog + ' *[name="'+e["error"][i][0]+'"]').addClass("fast_crud_error_form");
-											$(dialog + ' #fast_crud_error_container').append(e["error"][i][1] + "<br />")
+											if(typeof e["error"][i] !== "undefined" && typeof e["error"][i][1] !== "undefined"){
+
+												//console.log(dialog + ' *[name="'+e["error"][i][0]+'"]');
+												$(dialog + ' *[name="'+e["error"][i][0]+'"]').addClass("fast_crud_error_form");
+												$(dialog + ' #fast_crud_error_container').append(e["error"][i][1] + "<br />");
+											}
+											else
+												show_error = true;
 											
+										} 
+										if(show_error){
+											$(dialog + ' #fast_crud_error_container').append(e["error"][2] + "<br />");
 										}
 									} else {
 										location.reload();
