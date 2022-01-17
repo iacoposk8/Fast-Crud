@@ -21,7 +21,14 @@ CREATE TABLE `mytable` (
   `id` int(11) NOT NULL,
   `nickname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL
-)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `mytable`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `mytable`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
 ```
 Create the myjson.json file structured like this:  
 ```
@@ -82,7 +89,7 @@ But in addition to this there can also be an entry that leads you to modify or d
 If you want to enter the edit screen by clicking the "Nickname" column, just add these two lines before ```$fc->view($res, ["Nickname", "E-Mail"]);```
 ```
 	for($i = 0; $i < count($data); $i++)
-		$data[$i][0] = '<span class="fast-crud-edit" attr-id="'. $data[$i][0] .'">' . $data[$i][1] . '</span>';
+		$data[$i][0] = '<span class="fast-crud-edit" attr-id="'. $data[$i][0] .'">' . $data[$i][0] . '</span>';
 ```
 Just simply add ```class="fast-crud-edit"``` to the trigger element, Followed by ```attr-id``` with inside the id of the row of the table that you want to modify or delete.
 See the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example) for other details.
@@ -109,7 +116,7 @@ Full example:
 	$data = $sth->fetchAll(PDO::FETCH_NUM);
 
 	for($i = 0; $i < count($data); $i++)
-		$data[$i][0] = '<span class="fast-crud-edit" attr-id="'. $data[$i][0] .'">' . $data[$i][1] . '</span>';
+		$data[$i][0] = '<span class="fast-crud-edit" attr-id="'. $data[$i][0] .'">' . $data[$i][0] . '</span>';
 
 	$fc->view($data, ["Nickname", "E-Mail"]);
 ?>
