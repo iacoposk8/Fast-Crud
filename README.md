@@ -110,6 +110,98 @@ See the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-examp
 | validation | Here you can force the user to enter a particular field. For now there is only `email` and `mandatory`. Here is a two-dimensional array where there is [["control", "error message"]]. In control, you can also enter some php code. For more details see the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example)|
 
 ## Complete Example
+Json file
+
+    [
+    	[
+    		{
+    			"type": "email",
+    			"name": "email",
+    			"label": "Email",
+    			"placeholder": "Email",
+    			"validation": [
+    				["mandatory", "email is mandatory"],
+    				["email", "the email address entered is not valid"]
+    			]
+    		}
+    	],
+    	[
+    		{
+    			"type": "tel",
+    			"name": "telephone",
+    			"label": "Telephone",
+    			"validation": [
+    				["strlen(%) >= 10 && strlen(%) <= 12", "The length of the phone number is invalid "],
+    				["preg_match('/[0-9]/', %)", "Only numbers in the telephone field are allowed "]
+    			]
+    		}
+    	],
+    	[
+    		{
+    			"type": "radio",
+    			"name": "gender",
+    			"value": "male",
+    			"label": "Male"
+    		},
+    		{
+    			"type": "radio",
+    			"name": "gender",
+    			"value": "female",
+    			"label": "Female"
+    		}
+    	],
+    	[
+    		{
+    			"type": "checkbox",
+    			"name": "sports[]",
+    			"value": "tennis",
+    			"label": "Tennis"
+    		},
+    		{
+    			"type": "checkbox",
+    			"name": "sports[]",
+    			"value": "swim",
+    			"label": "Swim"
+    		},
+    		{
+    			"type": "checkbox",
+    			"name": "sports[]",
+    			"value": "bike",
+    			"label": "Bike"
+    		},
+    		{
+    			"type": "checkbox",
+    			"name": "sports[]",
+    			"value": "running",
+    			"label": "Running"
+    		}
+    	],
+    	[
+    		{
+    			"type": "textarea",
+    			"name": "note",
+    			"label": "Note",
+    			"placeholder": "Note"
+    		}
+    	],
+    	[
+    		{
+    			"type": "select",
+    			"name": "city[]",
+    			"label": "Where do you live ",
+    			"multiple": "multiple",
+    			"options":[
+    				[""],
+    				["Milan"],
+    				["New York", "new_york"],
+    				["Rome"],
+    				["Florence"]
+    			]
+    		}
+    	]
+    ]
+
+Php file
 TODO
 
 ## Libraries of this project
