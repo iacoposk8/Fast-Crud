@@ -1,6 +1,4 @@
 
-
-
 # Fast Crud
 CRUD library (create, read, update, and delete) based on php, jquery and ajax to quickly create forms with which to create/modify records and view/delete them
 
@@ -144,15 +142,25 @@ To find css styles visit: [https://freefrontend.com/css-forms](https://freefront
 ## Json
 | Special property | Description |
 | --- | --- | 
+| add_new_item | Option available only for `<select>` fields. Allows the user to insert an item not in the `option` list |
 | label | Each input field will have its own `<label>` element|
 | option | Only required for if you specified `"type": "select"` to add <option> entries into <select>. Inside it you can insert an array with the list of items to show. If you need to show a value other than the content of option you can use a two-dimensional array like this `[["item to show", "content of value"]]`. For more details see the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example)|
 | validation | Here you can force the user to enter a particular field. For now there is only `email` and `mandatory`. Here is a two-dimensional array where there is [["control", "error message"]]. In control, you can also enter some php code. For more details see the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example)|
+| value | Value for fields such as date, datetime and datetime-local can have the value `NOW()` and to show the current date | 
 
 ## Complete Example
 Json file
 
     [
     	[
+    	    	{
+			    	"type": "datetime-local",
+			    	"name": "date",
+			    	"label": "Date",
+			    	"value": "NOW()"
+		    	}
+	    	],
+	    	[
     		{
     			"type": "email",
     			"name": "email",
@@ -179,40 +187,22 @@ Json file
     		{
     			"type": "radio",
     			"name": "gender",
-    			"value": "male",
-    			"label": "Male"
-    		},
-    		{
-    			"type": "radio",
-    			"name": "gender",
-    			"value": "female",
-    			"label": "Female"
+    			"options":[
+				["Male"],
+				["Female"]
+			]
     		}
     	],
     	[
     		{
     			"type": "checkbox",
     			"name": "sports[]",
-    			"value": "tennis",
-    			"label": "Tennis"
-    		},
-    		{
-    			"type": "checkbox",
-    			"name": "sports[]",
-    			"value": "swim",
-    			"label": "Swim"
-    		},
-    		{
-    			"type": "checkbox",
-    			"name": "sports[]",
-    			"value": "bike",
-    			"label": "Bike"
-    		},
-    		{
-    			"type": "checkbox",
-    			"name": "sports[]",
-    			"value": "running",
-    			"label": "Running"
+    			"options":[
+				["Tennis"],
+				["Swim"],
+				["Bike"],
+				["Running"]
+			]
     		}
     	],
     	[
@@ -229,6 +219,7 @@ Json file
     			"name": "city[]",
     			"label": "Where do you live ",
     			"multiple": "multiple",
+    			"add_new_item": 1,
     			"options":[
     				[""],
     				["Milan"],
@@ -245,3 +236,4 @@ Json file
 - [jQuery](https://jquery.com/)
 - [jQueryUI](https://jqueryui.com/)
 - [DataTables](https://datatables.net/)
+- [Selectize.js](https://selectize.dev/)
