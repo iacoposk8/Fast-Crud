@@ -29,6 +29,11 @@
 			<link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 			<script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/sifter/0.5.4/sifter.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/microplugin/0.0.3/microplugin.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/selectize.min.js"></script>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.default.min.css"> 
+
 			<style>
 				.fast_crud_error_form{
 					border: 2px solid #f00;
@@ -92,6 +97,16 @@
 			)
 				return True;
 			return False;
+		}
+
+		function show_attributes($field){
+			$ret = "";
+			foreach($field as $key => $val){
+				if($key != "type" && $key != "validation" && $key != "label" && $key != "options"){
+					$ret.= " " . $key . '="' . $val . '"';
+				}
+			}
+			return $ret;
 		}
 
 		function create($template, $table, $id_column_name, $db_function = NULL){
@@ -217,13 +232,24 @@
 							echo '<textarea';
 						} else if( $field->{"type"} == "select" ){
 							echo '<select';
-						} else {
+							if(isset($field->{"add_new_item"}))
+								echo ' attr-add-new-item="1"';
+							else
+								echo ' attr-add-new-item="0"';
+						} else if ($field->{"type"} != "radio" && $field->{"type"} != "checkbox") {
 							echo '<input type="'.$field->{"type"}.'"';
 						}
 
-						foreach($field as $key => $val){
-							if($key != "type" && $key != "validation" && $key != "label" && $key != "options"){
-								echo " " . $key . '="' . $val . '"';
+						if ($field->{"type"} != "radio" && $field->{"type"} != "checkbox")
+							echo $this->show_attributes($field);
+						else{
+							foreach($field->{"options"} as $opt){
+								if(count($opt) == 2)
+									$opt_val = $opt[1];
+								else
+									$opt_val = $opt[0];
+
+								echo '<input' . $this->show_attributes($field) . ' type="'.$field->{"type"}.'" value="'.$opt_val.'"> '.$opt[0];
 							}
 						}
 
@@ -246,7 +272,7 @@
 							}
 
 							echo '</select>';
-						} else {
+						} else if ($field->{"type"} != "radio" && $field->{"type"} != "checkbox"){
 							echo ' />';
 						}
 					}
@@ -263,6 +289,11 @@
 
 				<script>
 					$( function() {
+						const now = new Date();
+  						now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+						$('input[type="datetime-local"][value="NOW()"],input[type="datetime"][value="NOW()"]').val(now.toISOString().slice(0, -8));
+						$('input[type="date"][value="NOW()"]').val(now.toISOString().slice(0, -14));
+
 						var dialog = "#fast-crud-dialog-<?php echo $id; ?>";
 						$(document).delegate("#fast-crud-add, .fast-crud-edit", "click", function(){
 							$(dialog + ' #fast-crud-id-edit').remove();
@@ -275,7 +306,7 @@
 								}
 							});
 
-							if($(this).attr("class").indexOf("fast-crud-edit") != -1){
+							if(typeof $(this).attr("class") !== "undefined" && $(this).attr("class").indexOf("fast-crud-edit") != -1){
 								$(".lds-ring").css("display", "inline-block");
 								$.ajax({
 									url: "<?php echo $this->current_url; ?>",
@@ -371,6 +402,20 @@
 									$(".lds-ring").css("display", "none");
 								}
 							});
+						});
+
+						$('select[attr-add-new-item="0"]').selectize()
+
+						$('select[attr-add-new-item="1"]').selectize({
+							delimiter: ",",
+							removeOption: 1,
+							persist: false,
+							create: function (input) {
+								return {
+									value: input,
+									text: input,
+								};
+						  	},
 						});
 					} );
 				</script>
