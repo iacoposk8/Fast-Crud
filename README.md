@@ -11,24 +11,7 @@ CRUD library (create, read, update, and delete) based on php, jquery and ajax to
 
 ## Quickstart
 
-Create a table on your MySQL database.
-For example:
-
-```
-CREATE TABLE `mytable` (
-  `id` int(11) NOT NULL,
-  `nickname` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-ALTER TABLE `mytable`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `mytable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
-```
-Create the myjson.json file structured like this:  
+Create the myjson.json file or string structured like this:  
 ```
 Rows
 |_ Fields (in the same row)
@@ -61,7 +44,7 @@ In this json go to describe the html attributes of each field. For example the f
 ```
 So you can insert infinite html attributes, even custom. There are 3 proprietary entries that will not be converted: label, validation and option. For more details you can learn more here.
 
-And now the index.php file that will be modified with your connection data to the MySQL database:
+And now the index.php file that will be modified with your connection data to the MySQL database (`$fc->create` will create the mysql table):
 ```
 <?php
 	require_once("FastCrud.php");
