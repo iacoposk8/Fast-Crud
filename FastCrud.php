@@ -109,8 +109,52 @@
 			return $ret;
 		}
 
+		function check_table($json, $table, $id_column_name){
+			$sth = $this->pdo->prepare("SHOW TABLES LIKE ?");
+			$sth->execute(array($table));
+			if(!count($sth->fetchAll(PDO::FETCH_CLASS))){
+				$sql = "CREATE TABLE `".$table."` (
+				  `".$id_column_name."` int(11) NOT NULL
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+				ALTER TABLE `".$table."`
+				  ADD PRIMARY KEY (`".$id_column_name."`);
+
+				ALTER TABLE `".$table."`
+				  MODIFY `".$id_column_name."` int(11) NOT NULL AUTO_INCREMENT;";
+
+				$sth = $this->pdo->prepare($sql);
+				$sth->execute();
+			}
+
+			foreach($json as $divs){
+				foreach($divs as $field){
+					$col = str_replace("[]","",$field->{"name"});
+
+					$type = "TEXT";
+					if(strstr($field->{"type"},"datetime"))
+						$type = "DATETIME";
+					if($field->{"type"} == "date")
+						$type = "DATE";
+					if($field->{"type"} == "number")
+						$type = "INT(11)";
+
+					$sth = $this->pdo->prepare("SHOW COLUMNS FROM ? LIKE ?");
+					$sth->execute(array($table, $col));
+					if(!count($sth->fetchAll(PDO::FETCH_CLASS))){
+						$sth = $this->pdo->prepare("ALTER TABLE `".$table."` ADD `".$col."` ".$type." NOT NULL");
+						$sth->execute();
+					}
+				}
+			}
+		}
+
 		function create($template, $table, $id_column_name, $db_function = NULL){
-			$json = json_decode(file_get_contents($template));
+			if(file_exists(($template)))
+				$json = json_decode(file_get_contents($template));
+			else
+				$json = json_decode($template);
+			$this->check_table($json, $table, $id_column_name);
 
 			if(isset($_GET["fc_edit"])){
 				header('Content-Type: application/json');
