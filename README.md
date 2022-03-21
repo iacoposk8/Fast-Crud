@@ -205,7 +205,7 @@ Json file
     			"label": "Where do you live ",
     			"multiple": "multiple",
     			"add_new_item": 1,
-			"no_db": 1,
+    			"no_db": 1,
     			"options":[
     				[""],
     				["Milan"],
