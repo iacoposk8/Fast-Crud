@@ -129,6 +129,8 @@
 
 			foreach($json as $divs){
 				foreach($divs as $field){
+					if(isset($field->{"no_db"}))
+						continue;
 					$col = str_replace("[]","",$field->{"name"});
 
 					$type = "TEXT";
