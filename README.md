@@ -1,4 +1,5 @@
 
+
 # Fast Crud
 CRUD library (create, read, update, and delete) based on php, jquery and ajax to quickly create forms with which to create/modify records and view/delete them
 
@@ -127,6 +128,7 @@ To find css styles visit: [https://freefrontend.com/css-forms](https://freefront
 | --- | --- | 
 | add_new_item | Option available only for `select` fields. Allows the user to insert an item not in the `option` list |
 | label | Each input field will have its own `<label>` element|
+| no_db | if you set no_db as 1, the library will exclude this column when it creates the table |
 | option | Only required for if you have `select`, `radio` or `checkbox` field. Inside it you can insert an array with the list of items to show. If you need to show a value other than the content of option you can use a two-dimensional array like this `[["item to show", "content of value"]]`. For more details see the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example)|
 | validation | Here you can force the user to enter a particular field. For now there is only `email` and `mandatory`. Here is a two-dimensional array where there is [["control", "error message"]]. In control, you can also enter some php code. For more details see the [complete example](https://github.com/iacoposk8/Fast-Crud#complete-example)|
 | value | Value for fields such as `date`, `datetime` and `datetime-local` can have the value `NOW()` and to show the current date | 
@@ -203,6 +205,7 @@ Json file
     			"label": "Where do you live ",
     			"multiple": "multiple",
     			"add_new_item": 1,
+			"no_db": 1,
     			"options":[
     				[""],
     				["Milan"],
