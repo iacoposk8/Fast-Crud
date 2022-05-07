@@ -1,5 +1,6 @@
 
 
+
 # Fast Crud
 CRUD library (create, read, update, and delete) based on php, jquery and ajax to quickly create forms with which to create/modify records and view/delete them
 
@@ -112,7 +113,7 @@ To find css styles visit: [https://freefrontend.com/css-forms](https://freefront
 | Method | Params | Description |
 | --- | --- | --- |
 | __construct | MYSQL_HOST, MYSQ_USER, MYSQL_PASSWORD, MYSQL_DATABASE_NAME | Connection to database |
-| create | json_filename or string, mysql_table_name, id_column_name, (optional) data_manipulation_function | Create the data entry and modification form. With data_manipulation_function you can modify the data obtained from the form before inserting or modifying them in the database. |
+| create | json_filename or string, mysql_table_name, id_column_name, (optional) data_manipulation_function, (optional) php_action_complete_function, (optional) js_action_complete_function  | Create the data entry and modification form. With data_manipulation_function you can modify the data obtained from the form before inserting or modifying them in the database. With php_action_complete_function you can launch a php function once the data insertion or modification is done and you will get the table id.  with js_action_complete_function you can launch a javascript function once the data has been entered, modified or deleted and you will get the transaction data.  |
 | view | data, head, (optional) DataTable_settings | Show data in a table |
 	
 ## Property
