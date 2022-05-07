@@ -151,7 +151,7 @@
 			}
 		}
 
-		function create($template, $table, $id_column_name, $db_function = NULL){
+		function create($template, $table, $id_column_name, $db_function_edit = NULL, $db_function_complete = NULL, $js_function_complete = NULL){
 			if(file_exists(($template)))
 				$json = json_decode(file_get_contents($template));
 			else
@@ -182,7 +182,7 @@
 				$sth = $this->pdo->prepare($sql);
 
 				if (!$sth->execute(array($_GET["fc_edit"])))
-					die(json_encode(Array("error" => $stm->errorInfo())));
+					die(json_encode(Array("error select for edit" => $stm->errorInfo())));
 				else
 					die(json_encode($sth->fetchAll(PDO::FETCH_CLASS)[0]));
 
@@ -197,7 +197,7 @@
 				$stm= $this->pdo->prepare($sql);
 				
 				if (!$stm->execute([$_GET["fc_delete"]]))
-					die(json_encode(Array("error" => $stm->errorInfo())));
+					die(json_encode(Array("error delete" => $stm->errorInfo())));
 				else
 					die(json_encode(Array("success" => 1)));
 			} else if(isset($_POST["fast-crud-send"])){
@@ -210,7 +210,7 @@
 
 				foreach($json as $divs){
 					foreach($divs as $field){						
-						if( $field->type != "submit" && !in_array($field->name, $unique)){
+						if( $field->type != "submit" && !in_array($field->name, $unique) && !isset($field->no_db)){
 							$unique[] = $field->name;
 							$name = str_replace("[]", "", $field->name);
 
@@ -235,8 +235,8 @@
 					die(json_encode(Array("error" => $error)));
 				}
 
-				if(!is_null($db_function))
-					$toevalutate = call_user_func($db_function, $toevalutate);
+				if(!is_null($db_function_edit))
+					$toevalutate = call_user_func($db_function_edit, $toevalutate);
 
 				foreach($toevalutate as $key => $val){
 					$arg[0][] = "`" . $key . "`";
@@ -253,11 +253,14 @@
 				}
 
 				$stm= $this->pdo->prepare($sql);
-				
+
 				if (!$stm->execute($arg[2]))
-					die(json_encode(Array("error" => $stm->errorInfo())));
-				else
-					die(json_encode(Array("success" => 1)));
+					die(json_encode(Array("error replace into" => $stm->errorInfo())));
+
+				if(!is_null($db_function_complete))
+					call_user_func($db_function_complete, [$this->pdo->lastInsertId()]);
+
+				die(json_encode(Array("success" => 1)));
 			} else {
 				$id = str_replace(' ', '-', $template);
 				$id = str_replace('.json', '', $id);
@@ -401,7 +404,11 @@
 											method: "GET",
 											data: {"fc_delete": $(this).attr("attr-id")},
 											success: function(e){
-												location.reload();
+												<?php if(!is_null($js_function_complete)){ ?>
+													<?php echo $js_function_complete . '({"fc_delete": $(this).attr("attr-id")});' ?>
+												<?php } else { ?>
+													<?php echo 'location.reload();'; ?>
+												<?php } ?>
 											},
 											complete: function(){
 												$(".lds-ring").css("display", "none");
@@ -418,10 +425,11 @@
 							$(dialog + ' #fast_crud_error_container').html("");
 
 							$(".lds-ring").css("display", "inline-block");
+							var data_send = $(this).serialize();
 							$.ajax({
 								url: "<?php echo $this->current_url; ?>",
 								method: "POST",
-								data: $(this).serialize() + "&fast-crud-send=1",
+								data: data_send + "&fast-crud-send=1",
 								success: function(e){
 									if(typeof e["error"] !== "undefined"){
 										var show_error = false;
@@ -440,9 +448,17 @@
 											$(dialog + ' #fast_crud_error_container').append(e["error"][2] + "<br />");
 										}
 									} else {
-										location.reload();
+										<?php if(!is_null($js_function_complete)){ ?>
+											<?php echo $js_function_complete . '(data_send);' ?>
+										<?php } else { ?>
+											<?php echo 'location.reload();'; ?>
+										<?php } ?>
 										//$(dialog).dialog( "close" );
 									}
+								},
+								error: function(e){
+									alert("error");
+									console.log(e);
 								},
 								complete: function(){
 									$(".lds-ring").css("display", "none");
